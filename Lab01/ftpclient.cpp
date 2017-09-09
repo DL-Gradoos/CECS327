@@ -1,4 +1,4 @@
-/**
+/*
     C++ client example using sockets.
     This programs can be compiled in linux and with minor modification in 
 	   mac (mainly on the name of the headers)
@@ -27,8 +27,8 @@ iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
 #include <sys/types.h>
 #include <unistd.h>
 #include <netdb.h>
-
 #include <vector>
+#include <dirent.h>
 
 #define BUFFER_LENGTH 2048
 #define WAITING_TIME 100000
@@ -143,14 +143,15 @@ std::string getIp(std::string reply)
 	return ip;
 }
 
-int getPort(std::string ip) {
-	int a1,a2,a3,a4,p1,p2,newPort;
+int getPort(std::string ip)
+{
+    int a1,a2,a3,a4,p1,p2,newPort;
     //Stores the ip into each variable, returns the number of arguments successfully filled
     if (sscanf(ip.c_str(), "%d,%d,%d,%d,%d,%d", &a1, &a2, &a3, &a4, &p1, &p2 ) == 6)
     {
     	return (p1 << 8) | p2;
     }
-	return -1;
+    return -1;
 }
 
 int enterPassiveMode(int sockpi) {
@@ -170,21 +171,59 @@ int enterPassiveMode(int sockpi) {
 	return passiveSocket;
 }
 
-bool parseSingleCommand(std::string command) {
+bool parseSingleCommand(std::string command)
+{
 	return true;
 }
 
-bool parseDoubleCommand(std::string command1, std::string command2) {
+bool parseDoubleCommand(std::string command1, std::string command2) 
+{
 	return true;
 }
 
-bool handleUserInput() {
+void listDirectoriesAndFiles(int sockpi)
+{
+	std::string word, strReply, temp;
+	int sockpasv;
+	DIR * directory;
+	struct dirent * entry;
+
+	std::cout << "I'm here." << std::endl;
+
+        sockpasv = enterPassiveMode(sockpi);
+
+	if(directory = opendir("/"))
+	{
+		while((entry = readdir(directory)) != NULL)
+		{
+			printf("%s\n", entry->d_name);
+		}
+		closedir(directory);
+	}
+	else
+	{
+		perror("");
+	}
+  //	strReply = request_reply(sockpasv, "LIST\r\n");
+    	temp = strReply;
+    	std::cout << temp << std::endl;	
+}
+
+bool handleUserInput(int sockpi)
+{
 	std::string userInput,
 				commOne,
 				commTwo,
 				commThree;
-	std::getline(std::cin, userInput);
-	int numOfCommands = sscanf(userInput.c_str(), "%s %s %s", &commOne, &commTwo, &commThree);
+	std::cin >> userInput;
+	if(userInput == "LIST")
+	{
+		listDirectoriesAndFiles(sockpi);
+	}
+	std::cout << "I'm here" << std::endl;
+	return false;	
+	/*
+	int numOfCommands = sscanf(userInput.c_str(), "%s %s %s", &commOne, &commTwo, &commThree;
 	if(numOfCommands == 1) {
 		return parseSingleCommand(commOne);
 	} else if(numOfCommands == 2) {
@@ -192,10 +231,11 @@ bool handleUserInput() {
 	} else {
 		std::cout << "This is not a valid command, please try again" << std::endl;
 		return true;
-	}
+	}*/
 }
 
-void quit(int s) {
+void quit(int s)
+{
 	//std::string reply = request_reply(sockpi, "QUIT\r\n");
 	/*if(reply.substr(0, 3) == "") {
 
@@ -205,40 +245,6 @@ void quit(int s) {
 
 	}*/
 }
-
-/*bool processOneWordCommand(std::string command) {
-	command = std::tolower(command);
-	if(command == "q" || command == "quit" || command == "exit" || command == "close") {
-		return false;
-	} else {
-		std::cout << "Command " << command << " not recognized." << std::endl;
-		return true;
-	}
-}
-
-bool processTwoWordCommand(std::string command0, std::string command1) {
-
-}
-
-bool processUserInput(std::string input) {
-	std::string w0, w1, w2;
-	int numOfWords = sscanf(input.c_str(), "%s %s %s", &w0, &w1, &w2);
-	if(numOfWords == 1) {
-		processOneWordCommand(w0);
-	} else if(numOfWords == 2) {
-		processTwoWordCommand(w0, w1);
-	} else {
-		std::cout << "Command " << w0 << " " << w1 << " " << w2 << " not recognized." << std::endl;
-		return true;
-	}
-}*/
-
-/*void checkStringReply(std::string reply) {
-	switch(reply.substr(0, 3)) {
-		case x:
-	}
-}*/
-
 
 int main(int argc , char *argv[])
 {
@@ -287,10 +293,9 @@ int main(int argc , char *argv[])
 
 	//PASSIVE MODE
 	bool isRunning = true;
-	while(isRunning) {
-		sockpasv = enterPassiveMode(sockpi);
-		isRunning = handleUserInput();
-		//cin.getline() >> 
+	while(isRunning)
+	{   
+		isRunning = handleUserInput(sockpi); 
 	}
 	
     /*strReply = request_reply(sockpi, "PASV\r\n");
