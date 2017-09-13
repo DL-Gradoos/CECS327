@@ -111,7 +111,7 @@ std::string reply(int s)
 /**
 *   Requests a reply from the server after sending a message
 *
-*   @param s The sockete / remote server being connected to
+*   @param s The socket / remote server being connected to
 *   @param message The message to be sent
 */
 std::string request_reply(int s, std::string message)
@@ -273,7 +273,7 @@ std::string showCommand(std::string name, int sockpi, int sockpasv) {
 std::string intoCommand(std::string name, int sockpi, int sockpasv) {
 	std::string strReply = request_reply(sockpi, "CWD " + name + "\r\n");
 	if(strReply.substr(0, 3) == "250") {
-		return strReply.substr(5);
+		return strReply.substr(4);
 	}
 	else {
 		return "Could not change into new directory";
@@ -323,12 +323,12 @@ bool parseDoubleCommand(std::string command1, std::string command2, int sockpi, 
 	bool userReply = true;
 	if(command1 == "GET" || command1 == "3") {
 		strReply = getCommand(command2, sockpi, sockpasv);
+		if(strReply.substr(0, 6) == "Unable") userReply = false;
 	} else if(command1 == "SHOW" || command1 == "4") {
 		strReply = showCommand(command2, sockpi, sockpasv);
 	} else if(command1 == "INTO" || command1 == "5") {
 		strReply = intoCommand(command2, sockpi, sockpasv);
-		close(sockpasv);
-		return true;
+		userReply = false;
 	} else {
 		strReply = "Command " + command1 + " " + command2 + " not recognized, please try again.";
 		userReply = false;
@@ -435,3 +435,4 @@ int main(int argc , char *argv[])
 	quitCommand(sockpi);    
     return 0;
 }
+
