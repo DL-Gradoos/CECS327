@@ -55,13 +55,11 @@ int create_connection(std::string host, int port)
     //Stores the ip into each variable, returns the number of arguments successfully filled
     if (sscanf(host.c_str(), "%d.%d.%d.%d", &a1, &a2, &a3, &a4 ) == 4)
     {
-        //std::cout << "by ip" << std::endl;
         //Stores an integer value suitable for use as an Internet address
         saddr.sin_addr.s_addr =  inet_addr(host.c_str());
     }
     else {
     	//If the host string was not split and stored successfully, then it is not an ip addr
-        //std::cout << "by name";
         hostent *record = gethostbyname(host.c_str());
         in_addr *addressptr = (in_addr *)record->h_addr;
         saddr.sin_addr = *addressptr;
@@ -136,7 +134,6 @@ std::string getIp(std::string reply)
 	switch(choice) {
 		case 227:
 			ip = reply.substr(26);
-			//std::cout << ip << std::endl;
 			ip = ip.substr(1, (ip.length() - 4));
 			break;
 		default:
@@ -178,7 +175,6 @@ int enterPassiveMode(int sockpi) {
 	std::cout << newPort << std::endl;
 	//If we couldn't get the port, return -1
 	if(newPort == -1) return -1;
-	//std::cout << "[227] Connection created successfully " << std::endl;
 	//Create a new socket descriptor
 	passiveSocket = create_connection("130.179.16.134", newPort);
 	return passiveSocket;
