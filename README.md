@@ -19,3 +19,6 @@ A basic ftp client that runs in terminal. Allows the user to choose 6 commands, 
     Changes working directory to foldername
     * **QUIT**  
     Exits the application
+
+2. KiloBots  
+This program needs to be used in conjunction with the kilobots library. The code supplied shows how a leader is chosen in a ring of robots, where the leader will light up green. The leader is chosen out of whichever robot has the lowest id number.
