@@ -13,28 +13,23 @@
     REGISTER_USERDATA(USERDATA)
 #endif
 
-/* Helper function for setting motor speed smoothly
- */
+/**
+*   Helper function for setting motor speed smoothly
+*
+*   @param ccw Integer that sets motors as counter-clockwise
+*   @param cw Integer that sets motors as clockwise
+*/
 void smooth_set_motors(uint8_t ccw, uint8_t cw)
 {
-    // OCR2A = ccw;  OCR2B = cw;
-/*#ifdef KILOBOT
-    uint8_t l = 0, r = 0;
-    if (ccw && !OCR2A) // we want left motor on, and it's off
-        l = 0xff;
-    if (cw && !OCR2B)  // we want right motor on, and it's off
-        r = 0xff;
-    if (l || r)        // at least one motor needs spin-up
-    {
-        set_motors(l, r);
-        delay(15);
-    }
-#endif*/
     // spin-up is done, now we set the real value
     set_motors(ccw, cw);
 }
 
-
+/**
+*   Helper function that sets the motion of the motor
+*
+*   @param new_motion Determines where the motor moves
+*/
 void set_motion(motion_t new_motion)
 {
     switch(new_motion) {
@@ -53,7 +48,11 @@ void set_motion(motion_t new_motion)
     }
 }
 
-
+/**
+*   Helper function for setting distance
+*
+*   @param distance Integer that contains the distance for the motor
+*/
 char in_interval(uint8_t distance)
 {
     //if (distance >= 40 && distance <= 60)
@@ -62,7 +61,10 @@ char in_interval(uint8_t distance)
     return 0;
 }
 
-//
+/**
+*   Helper function to check the node to see if it's stablized
+*
+*/
 char is_stabilized()
 {
     uint8_t i=0,j=0;
@@ -77,7 +79,11 @@ char is_stabilized()
     return j == mydata->num_neighbors;
 }
 
-// Search for id in the neighboring nodes
+/**
+*   Helper function for setting distance
+*
+*   @param id Integer that contains the distance for the motor
+*/
 uint8_t exists_nearest_neighbor(uint8_t id)
 {
     uint8_t i;
@@ -90,7 +96,10 @@ uint8_t exists_nearest_neighbor(uint8_t id)
 }
 
 
-// Search for id in the neighboring nodes
+/**
+*   Helper function to make sure the nodes are connecting
+*
+*/
 uint8_t are_all_cooperative()
 {
     uint8_t i;
@@ -102,6 +111,10 @@ uint8_t are_all_cooperative()
     return 1;
 }
 
+/**
+*	Function that obtains the nearest two node neighbors for a particular node.
+*
+*/
 uint8_t get_nearest_two_neighbors()
 {
     uint8_t i, l, k;
@@ -151,6 +164,12 @@ uint8_t get_nearest_two_neighbors()
     return i;
 }
 
+/**
+*   Helper function for making sure the receiving node obtains the message
+*
+*   @param distance Integer that contains the distance for the motor
+*   @param payload Integer that contains the payload of the motor
+*/
 void recv_sharing(uint8_t *payload, uint8_t distance)
 {
     if (payload[ID] == mydata->my_id  || payload[ID] == 0 || !in_interval(distance) ) return;
@@ -188,6 +207,12 @@ void recv_sharing(uint8_t *payload, uint8_t distance)
 
 }
 
+/**
+*   Helper function for making sure the receiving node is able to join the group
+*
+*   @param distance Integer that contains the distance for the motor
+*   @param payload Integer that contains the payload of the motor
+*/
 void recv_joining(uint8_t *payload)
 {
     if (payload[ID] == mydata->my_id) return;
@@ -218,6 +243,11 @@ void recv_joining(uint8_t *payload)
     
 }
 
+/**
+*   Helper function to help the receiving node can be elected the leader of the group
+*
+*   @param payload Integer that contains the payload of the motor
+*/
 void recv_election(uint8_t *payload)
 {
     // TODO: implement here the protocol
@@ -265,7 +295,12 @@ void recv_election(uint8_t *payload)
 	}
 }
 
-
+/**
+*   Helper function for sending the message
+*
+*   @param m pointer that contains the message for the motor
+*   @param d pointer that contains the distance of the motor
+*/
 void message_rx(message_t *m, distance_measurement_t *d)
 {
     uint8_t dist = estimate_distance(d);
@@ -286,7 +321,12 @@ void message_rx(message_t *m, distance_measurement_t *d)
     }
 }
 
-
+/**
+*   Function for preparing the message for the node to be sent
+*
+*   @param m Integer that contains the message for the motor
+*   @param receiver Integer that contains the ID of the motor to be receiving the message
+*/
 void prepare_message(uint8_t m, uint8_t receiver)
 {
     mydata->msg.data[MSG] = m;
@@ -302,8 +342,10 @@ void prepare_message(uint8_t m, uint8_t receiver)
     mydata->message_sent = 0;
 }
 
-/**********************************/
-/**********************************/
+/**
+*   Helper function for the initial node to join the group
+*
+*/
 void send_joining()
 {
     uint8_t i;
@@ -330,6 +372,10 @@ void send_joining()
     }
 }
 
+/**
+*   Helper function for the initial node to share the message to the receiving node
+*
+*/
 void send_sharing()
 {
     // Precondition
@@ -342,10 +388,10 @@ void send_sharing()
     }
 }
 
-
-
-
-
+/**
+*   Helper function for the node to send an election message
+*
+*/
 void send_election()
 {
     // TODO: it will send only one election message  if it has just join the ring
@@ -360,6 +406,11 @@ void send_election()
     }
 }
 
+/**
+*   Helper function for setting distance
+*
+*   @param tick Integer that contains the ticks for the motor
+*/
 void move(uint8_t tick)
 {
     // TODO: Optional you can make the leader robot move
@@ -393,7 +444,10 @@ void move(uint8_t tick)
     
 }
 
-
+/**
+*   Helper function for the loop of the program
+*
+*/
 void loop()
 {
     delay(30);
@@ -408,19 +462,30 @@ void loop()
     mydata->now++;
 }
 
-
+/**
+*  function for the message
+*
+*/
 message_t *message_tx()
 {
     mydata->message_sent = 1;
     return &mydata->msg;
 }
  
+/**
+*   Determines whether or not the message was successfully sent
+*
+*/
 void message_tx_success() {
     mydata->message_sent = 1;
     mydata->msg.data[MSG] = NULL_MSG;
     mydata->msg.crc = message_crc(&mydata->msg);
 }
 
+/**
+*   Sets up the program 
+*
+*/
 void setup() {
     rand_seed(rand_hard());
 
