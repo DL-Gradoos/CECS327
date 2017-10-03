@@ -210,7 +210,6 @@ void recv_sharing(uint8_t *payload, uint8_t distance)
 /**
 *   Helper function for making sure the receiving node is able to join the group
 *
-*   @param distance Integer that contains the distance for the motor
 *   @param payload Integer that contains the payload of the motor
 */
 void recv_joining(uint8_t *payload)
