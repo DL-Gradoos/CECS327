@@ -57,6 +57,7 @@ public class Client
                 break;
             case 7:
                 //head
+            	c.dfs.head("Metadata.json");
                 break;
             case 8:
                 //append
@@ -76,10 +77,10 @@ public class Client
     
     static public void main(String args[]) throws Exception
     {
-        if (args.length < 1 ) {
+    	if (args.length < 1 ) {
             throw new IllegalArgumentException("Parameter: <port>");
         }
-        Client client = new Client( Integer.parseInt(args[0]));
+        Client client = new Client(Integer.parseInt(args[0]));
         Scanner input = new Scanner(System.in);
         String[] command;
         while(true) {
@@ -87,5 +88,6 @@ public class Client
         	command = input.nextLine().split("\\s+");
         	runCommand(client, command);
         }
+        
      } 
 }

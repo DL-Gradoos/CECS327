@@ -2,6 +2,9 @@ import java.nio.charset.Charset;
 import java.rmi.*;
 import java.net.*;
 import java.util.*;
+
+import org.json.JSONObject;
+
 import java.io.*;
 import java.nio.file.*;
 import java.math.BigInteger;
@@ -96,10 +99,13 @@ public class DFS
         ChordMessageInterface peer = chord.locateSuccessor(guid);
 
         /* If Metadata.json has not be created yet, create it, else read it in */
-        if(Files.notExists(Paths.get(peer.getId()+"/repository/" + guid))) {
+        if(Files.notExists(Paths.get(peer.getId()+"/repository/" + guid))) 
+        {
             jsonFile = new Metadata();
             writeMetaData(jsonFile);
-        } else {
+        } 
+        else 
+        {
             rawData = new JsonReader(new InputStreamReader(peer.get(guid)));
             jsonFile = gson.fromJson(rawData, Metadata.class);
 
@@ -205,17 +211,57 @@ public class DFS
         return null;
     }
     
-    
     public Byte[] tail(String fileName) throws Exception
     {
         // TODO: return the last page of the fileName
-        return null;
+        Metadata m = readMetaData();
+        JsonParser parser = new JsonParser();
+        JsonArray jsonarray = (JsonArray) parser.parse(new FileReader("Metadata.json"));
+    	Object o = jsonarray.getAsJsonObject();
+    	JSONObject jsonobject = (JSONObject) o;
+    	String name = (String) jsonobject.get("name");
+    	if(name.equals("File2"))
+    	{
+	    	System.out.println(name);
+	    	JsonArray newarray = (JsonArray) jsonobject.get("page");
+	    	for(Object n : newarray)
+	    	{
+	    		System.out.println(n+" ");
+	    	}
+	    	return null;
+    	}
+    	else
+    	{
+    		return null;
+    	}
     }
+    
     public Byte[] head(String fileName) throws Exception
     {
         // TODO: return the first page of the fileName
-        return null;
+        Metadata m = readMetaData();
+        JsonParser parser = new JsonParser();
+        JsonArray jsonarray = (JsonArray) parser.parse(new FileReader("Metadata.json"));
+    	
+    	Object o = jsonarray.getAsJsonObject();
+    	JSONObject jsonobject = (JSONObject) o;
+    	String name = (String) jsonobject.get("name");
+    	if(name.equals("File1"))
+    	{
+	    	System.out.println(name);
+	    	JsonArray newarray = (JsonArray) jsonobject.get("page");
+	    	for(Object n : newarray)
+	    	{
+	    		System.out.println(n+" ");
+	    	}
+	    	return null;
+    	}
+    	else
+    	{
+    		return null;
+    	}
     }
+    
     public void append(String filename, Byte[] data) throws Exception
     {
         // TODO: append data to fileName. If it is needed, add a new page.
@@ -224,8 +270,5 @@ public class DFS
         //peer.put(guid, data);
         // Write Metadata
         Metadata m = readMetaData();
-
-        
     }
-    
 }
