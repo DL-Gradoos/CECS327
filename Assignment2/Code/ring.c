@@ -277,9 +277,13 @@ void recv_election(uint8_t *payload)
 			//mydata->min_id = payload[LEADER];
 			printf("[DLSTUFF] CURRENT LEADER: %d\n", mydata->my_leader);
 			mydata->send_election = 1;
+			mydata->red = 1;
+			mydata->green = 0;
 		} else if(payload[LEADER] > mydata->my_leader) {
 			payload[LEADER] = mydata->my_leader;
 			mydata->send_election = 1;
+			mydata->red = 1;
+			mydata->green = 0;
 			//mydata->is_leader = 1;
 			//mydata->active = 1;
 			//if(mydata->active == 0) 
