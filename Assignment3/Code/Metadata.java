@@ -18,12 +18,37 @@ public class Metadata implements Serializable {
         return files.get(index);
     }
 
+    public MetaFile getFile(String fileName) {
+        for(MetaFile f : files) {
+            if(f.getName().equals(fileName))
+                return f;
+        }
+        return null;
+    }
+
     public void addFile(MetaFile f) {
         files.add(f);
     }
 
     public void removeFile(int index) {
         files.remove(index);
+    }
+
+    public void removeFile(String fileName) {
+        for (int ii = 0; ii < files.size(); ii++) {
+            if (files.get(ii).getName().equals(fileName)) {
+                files.remove(ii);
+                return;
+            }
+        }
+    }
+
+    public boolean doesFileExist(String fileName) {
+        for (MetaFile file : files) {
+            if(file.getName().equals(fileName))
+                return true;
+        }
+        return false;
     }
 
     public ArrayList<MetaFile> getListOfFiles() { return files; }

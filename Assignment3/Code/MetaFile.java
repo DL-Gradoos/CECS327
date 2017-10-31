@@ -40,7 +40,7 @@ public class MetaFile implements Serializable {
     }
 
     public int getNumberOfPages() {
-        return numberOfPages;
+        return pages.size();
     }
 
     public void setNumberOfPages(int numberOfPages) {
@@ -63,19 +63,32 @@ public class MetaFile implements Serializable {
         this.size = size;
     }
 
+    public ArrayList<Page> getListOfPages() {
+        return pages;
+    }
+
     public Page getPage(int index) {
         return pages.get(index);
     }
 
     public void addPage(Page p) {
         pages.add(p);
+        numberOfPages++;
     }
 
     public void removePage(int index) {
         pages.remove(index);
     }
 
-    public String toString() {
-        return "Name: " + name + ", Number of Pages: " + numberOfPages + ", Page Size: " + pageSize + ", Size: " + size + "\t";
+    public void removeAllPages() {
+        for(int ii = pages.size() - 1; ii >= 0; ii--) {
+            pages.remove(ii);
+        }
+    }
+
+    public void updateSize() {
+        for(Page p : pages) {
+            size += p.getSize();
+        }
     }
 }
