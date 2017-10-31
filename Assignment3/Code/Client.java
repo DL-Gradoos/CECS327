@@ -35,8 +35,10 @@ public class Client
     }
 
     /**
-     * @param c
-     * @param input
+	 * Runs user chosen command
+	 *
+     * @param c The client
+     * @param input User input
      * @throws Exception
      */
     private static void runCommand(Client c, String[] input) throws Exception {
