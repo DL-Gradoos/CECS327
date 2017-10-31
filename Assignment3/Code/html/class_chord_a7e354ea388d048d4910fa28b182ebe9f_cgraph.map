@@ -1,0 +1,7 @@
+<map id="Chord.locateSuccessor" name="Chord.locateSuccessor">
+<area shape="rect" id="node2" href="$interface_chord_message_interface.html#aaa28e7b91333c557955404ee8d26d65a" title="ChordMessageInterface.getId" alt="" coords="214,5,405,32"/>
+<area shape="rect" id="node3" href="$class_chord.html#aa0b073bf26ea53ee4c36749b5bde4935" title="Chord.isKeyInSemiCloseInterval" alt="" coords="456,56,663,83"/>
+<area shape="rect" id="node4" href="$class_chord.html#aecd3971877558c3b1290bd49d7576ab0" title="Chord.closestPrecedingNode" alt="" coords="214,107,405,133"/>
+<area shape="rect" id="node6" href="$interface_chord_message_interface.html#ab7df61ab2cfee0f39206014d7a42b063" title="ChordMessageInterface.locate\lSuccessor" alt="" coords="211,158,408,199"/>
+<area shape="rect" id="node5" href="$class_chord.html#a3dfb600d109b7d23459a3353af0274a9" title="Chord.getId" alt="" coords="515,107,603,133"/>
+</map>

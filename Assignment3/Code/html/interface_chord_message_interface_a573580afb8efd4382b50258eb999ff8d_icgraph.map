@@ -1,0 +1,15 @@
+<map id="ChordMessageInterface.customPut" name="ChordMessageInterface.customPut">
+<area shape="rect" id="node2" href="$class_chord.html#a4de8b8464782dd96d88deeb35b2f27a2" title="Chord.notify" alt="" coords="301,107,391,133"/>
+<area shape="rect" id="node3" href="$class_d_f_s.html#ac59616a19b8f351de28ceea8aae6714a" title="DFS.writeMetaData" alt="" coords="279,157,413,184"/>
+<area shape="rect" id="node4" href="$class_d_f_s.html#a05df5c4a73e10460c29b14b46642eb8a" title="DFS.readMetaData" alt="" coords="461,157,595,184"/>
+<area shape="rect" id="node5" href="$class_d_f_s.html#a7b0d44e11c6176a71d040919b6fe1d96" title="DFS.mv" alt="" coords="656,5,724,32"/>
+<area shape="rect" id="node9" href="$class_d_f_s.html#ac44bf8288f4423fc87370b97f95f07c1" title="DFS.touch" alt="" coords="648,56,732,83"/>
+<area shape="rect" id="node10" href="$class_d_f_s.html#afa4df78a9af4f942cd878afc329b98e1" title="DFS.delete" alt="" coords="647,259,733,285"/>
+<area shape="rect" id="node14" href="$class_d_f_s.html#ae4165e8511464aa7b479f3664deb8ffd" title="DFS.append" alt="" coords="643,309,737,336"/>
+<area shape="rect" id="node8" href="$class_d_f_s.html#a753e09aab8e500f333585f1a6ee865e1" title="DFS.ls" alt="" coords="794,56,857,83"/>
+<area shape="rect" id="node11" href="$class_d_f_s.html#a38d1d750833a304a2d09541820cd5108" title="DFS.read" alt="" coords="651,157,729,184"/>
+<area shape="rect" id="node12" href="$class_d_f_s.html#a1caca2d7d6cb23891732c0737acbfa71" title="DFS.tail" alt="" coords="791,208,860,235"/>
+<area shape="rect" id="node6" href="$class_client.html#ad51f6b74f9384f800a05ecffc97eadc3" title="Client.showMenu" alt="" coords="913,132,1035,159"/>
+<area shape="rect" id="node7" href="$class_client.html#ac4219c51358857184ceeb023ada3d8ae" title="Client.main" alt="" coords="1083,132,1169,159"/>
+<area shape="rect" id="node13" href="$class_d_f_s.html#a6a7c27c08e2ca063922a53ccffb711b8" title="DFS.head" alt="" coords="785,157,865,184"/>
+</map>
