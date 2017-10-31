@@ -17,6 +17,9 @@ public class Client
         // join, ls, touch, delete, read, tail, head, append, move
     }
 
+    /**
+     * This function displays the menu of the client. 
+     */
     public static void showMenu() {
         System.out.println("Menu");
         System.out.println("1. Join [ip] [port]");
@@ -31,6 +34,11 @@ public class Client
         System.out.println("10. Quit");
     }
 
+    /**
+     * @param c
+     * @param input
+     * @throws Exception
+     */
     private static void runCommand(Client c, String[] input) throws Exception {
         Scanner in = new Scanner(System.in);
         switch(Integer.parseInt(input[0])) {

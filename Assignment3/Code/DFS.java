@@ -53,6 +53,12 @@ public class DFS
     int port;
     Chord  chord;
 
+    /**
+     * @param objectName Parameter that contains a md5 hash
+     * @return the md5 value
+     * 
+     * This function obtains the md5 value. 
+     */
     private long md5(String objectName)
     {
         try
@@ -73,6 +79,12 @@ public class DFS
 
 
 
+    /**
+     * @param port Parameter that contains the port for the program.
+     * @throws Exception
+     * 
+     * DFS constructor with a port number as a parameter.
+     */
     public DFS(int port) throws Exception
     {
         this.port = port;
@@ -81,12 +93,25 @@ public class DFS
         Files.createDirectories(Paths.get(guid+"/repository"));
     }
 
+    /**
+     * @param Ip Parameter that contains the IP address for the connection.
+     * @param port Parameter that contains the port for the program.
+     * @throws Exception
+     * 
+     * This method joins two clients that are concurrently running. 
+     */
     public  void join(String Ip, int port) throws Exception
     {
         chord.joinRing(Ip, port);
         chord.Print();
     }
 
+    /**
+     * @return the metadata file
+     * @throws Exception
+     * 
+     * This method reads the metadata file in the repositories. 
+     */
     public Metadata readMetaData() throws Exception
     {
         Metadata jsonFile = null;
@@ -123,6 +148,12 @@ public class DFS
         peer.put(guid, stream);
     }*/
 
+    /**
+     * @param m parameter that contains the metadata file to be written
+     * @throws Exception
+     * 
+     * This method reads the metadata file in the repositories. 
+     */
     public void writeMetaData(Metadata m) throws Exception {
         Metadata jsonFile = m;
         Gson gson = new GsonBuilder().create();
@@ -137,9 +168,11 @@ public class DFS
     /**
      * Renames the name of the file
      *
-     * @param oldName
-     * @param newName
+     * @param oldName Parameter that contains the name of the old file. 
+     * @param newName Parameter that contains the name of the new file.
      * @throws Exception
+     * 
+     * This method switches the name of a file to a name that the user specifies. 
      */
     public void mv(String oldName, String newName) throws Exception
     {
@@ -169,6 +202,12 @@ public class DFS
     }
 
 
+    /**
+     * @return the list of the files in the metadata
+     * @throws Exception
+     * 
+     * This function lists all of the files in the metadata.
+     */
     public String ls() throws Exception
     {
         String listOfFiles;
@@ -185,6 +224,12 @@ public class DFS
     }
 
 
+    /**
+     * @param fileName Parameter that contains the file and the name of it.
+     * @throws Exception
+     * 
+     * This function creates a new entry to the metadata.
+     */
     public void touch(String fileName) throws Exception
     {
         // TODO: Create the file fileName by adding a new entry to the Metadata
@@ -194,9 +239,14 @@ public class DFS
         MetaFile f = new MetaFile(fileName, 0, 1024, 0);
         m.addFile(f);
         writeMetaData(m);
-        //m.getListOfFiles().forEach(mFile -> System.out.println(mFile));
-        //System.out.println(m.getListOfFiles());
     }
+    
+    /**
+     * @param fileName Parameter that contains the file and the name of it.
+     * @throws Exception
+     * 
+     * This function deletes a page from the metadata.
+     */
     public void delete(String fileName) throws Exception
     {
         // TODO: remove all the pages in the entry fileName in the Metadata and then the entry
@@ -215,6 +265,14 @@ public class DFS
         writeMetaData(m);
     }
 
+    /**
+     * @param fileName Parameter that contains the file and the name of it.
+     * @param pageNumber Parameter that contains the page number of the file
+     * @return the list of the files in the metadata.
+     * @throws Exception
+     * 
+     * This function lists all of the files in the metadata.
+     */
     public byte[] read(String fileName, int pageNumber) throws Exception
     {
         // TODO: read pageNumber from fileName
@@ -232,6 +290,13 @@ public class DFS
     }
 
 
+    /**
+     * @param fileName Parameter that contains the file and the name of it.
+     * @return the last page of the fileName.
+     * @throws Exception
+     * 
+     * This function returns the last page of the file in metadata.json
+     */
     public byte[] tail(String fileName) throws Exception
     {
         // TODO: return the last page of the fileName
@@ -239,11 +304,26 @@ public class DFS
         int numberOfPages = m.getFile(fileName).getNumberOfPages();
         return read(fileName, numberOfPages);
     }
+    /**
+     * @param fileName Parameter that contains the file and the name of it.
+     * @return the first page of the fileName.
+     * @throws Exception
+     * 
+     * This function returns the first page of the file in Metadata.json
+     */
     public byte[] head(String fileName) throws Exception
     {
         // TODO: return the first page of the fileName
         return read(fileName, 1);
     }
+    
+    /**
+     * @param fileName Parameter that contains the file and the name of it.
+     * @param data Parameter that contains the data of the file.
+     * @throws Exception
+     * 
+     * This function adds data to the end of a file in Metadata.json
+     */
     public void append(String fileName, byte[] data) throws Exception
     {
         // TODO: append data to fileName. If it is needed, add a new page.
@@ -303,13 +383,12 @@ public class DFS
     }
 
     /**
-     * Appends to an unfilled page and returns the rest of the bytes
-     *
-     * @param m The metadata
-     * @param f The file
-     * @param p The unfilled page
-     * @param data Byte stream
-     * @return The amount of bytes remaining
+     * @param m Parameter that contains the Metadata 
+     * @param f Parameter that contains the Metadata file
+     * @param p Parameter that contains a page
+     * @param data Parameter where the data is stored
+     * @return the appended data of a new file. 
+     * @throws Exception
      */
     private byte[] appendToUnfilledPage(Metadata m, MetaFile f, Page p, byte[] data) throws Exception {
         //String currFile = convertInputStreamToString(chord.get(p.getGuid()));
@@ -346,6 +425,13 @@ public class DFS
 
     /**
      * Found on https://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
+     */
+    /**
+     * @param is Parameter that contains input to be converted to a string
+     * @return the string of the input
+     * @throws Exception
+     * 
+     * This function contains the input converted to a string.
      */
     private String convertInputStreamToString(InputStream is) throws Exception {
         BufferedInputStream bis = new BufferedInputStream(is);
